@@ -31,64 +31,61 @@ const Essearch = (props) => {
   return (
    
     <ESSearch>
-      <SearchProvider
-        config={{
-          apiConnector: connector,
-          initialState: {
-            resultsPerPage: 10
+    <SearchProvider
+      config={{
+        apiConnector: connector,
+        initialState: {
+          resultsPerPage: 10
+        },
+        searchQuery: {
+          search_fields: {
+            title: {},
+            description: {}
           },
-          searchQuery: {
-            search_fields: {
-              title: {},
-              body_content: {}
+          result_fields: {
+            title: {
+              snippet: {
+                size: 100,
+                fallback: true
+              }
             },
-            result_fields: {
-              title: {
-                snippet: {
-                  size: 100,
-                  fallback: true
-                }
-              },
-              body_content: {
-                snippet: {
-                  size: 900,
-                  fallback: true
-                }
-              },
-              url: {
-                snippet: {
-                  size: 300,
-                  fallback: true
-                }
+            description: {
+              snippet: {
+                size: 900,
+                fallback: true
+              }
+            },
+            nps_link: {
+              snippet: {
+                size: 300,
+                fallback: true
               }
             }
           }
-        }}
-      >
-        <div className="App">
-          <Layout
-            header={<SearchBox />}
-            bodyHeader={
-              <React.Fragment>
-                {<PagingInfo
-                  end={10}
-                  start={1}
-                  totalResults={100}
-                />}
-               
-              </React.Fragment>
-            }
-            bodyFooter={<Paging />}
-            bodyContent={
-              <Results titleField="title" urlField="url" />
-
-            }
-
-          />
-
-        </div>
-      </SearchProvider>
-    </ESSearch>
+        }
+      }}
+    >
+      <div className="App">
+        <Layout
+          header={<SearchBox />}
+          bodyHeader={
+            <React.Fragment>
+              {<PagingInfo
+                end={10}
+                start={1}
+                totalResults={100}
+              />}
+            </React.Fragment>
+          }
+          bodyFooter={<Paging />}
+          bodyContent={
+            <Results titleField="title" urlField="nps_link" />
+          }
+        />
+  
+      </div>
+    </SearchProvider>
+  </ESSearch>
   );
 };
 
